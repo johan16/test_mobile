@@ -85,10 +85,11 @@
 		<h3>NOMBRE SUPERVISOR</h3>
 	</div>
 	<div data-role="content">	
-		<ul data-role="listview">
+		<ul data-role="listview" data-filter="true" data-filter-placeholder="Ingrese Tienda">
 			<li><a href="#page2">TIENDA 1</a></li>
             <li><a href="#page3">TIENDA 2</a></li>
 			<li><a href="#page4">TIENDA 3</a></li>
+			<li><a href="#">TIENDA N</a></li>
 		</ul>
 	</div>
 	<div data-role="footer">
@@ -98,19 +99,15 @@
 
 <div data-role="page" id="page2">
 	<div data-role="header">
-		<h1>Página dos</h1>
+		<h1>ENCUENTAS TIENDA 1</h1>
 	</div>
-	<div data-role="content">	
-        <a href="#" data-role="button" id="btnCamera">Capture a photo with camera</a>
-        <a href="#" data-role="button" id="open_lib_button">Open Photo Library</a>
-        <a href="#" data-role="button" id="open_alb_button">Open saved photo album</a>
-	</div>
-	<div class="capture">
-		<img src="" alt="">
-	</div>
-	<div data-role="footer">
-		<h4>Depto Informática Eurofashion</h4>
-	</div>
+	<ul data-role="listview" >
+		<li><a href="#page5">ENCUESTA 1</a></li>
+        <li><a href="">ENCUESTA 2</a></li>
+		<li><a href="">ENCUESTA 3</a></li>
+		<li><a href="">ENCUESTA N</a></li>
+	</ul>
+	
 </div>
 
 <div data-role="page" id="page3">
@@ -136,6 +133,41 @@
 		<h4>Depto Informática Eurofashion</h4>
 	</div>
 </div>
+<div data-role="page" id="page5">
+	<div data-role="header">
+		<h3>PROMOCION X</h3>
+	</div>
+	<div data-role="fieldcontain">
+	  <fieldset data-role="controlgroup">
+	    <legend>Del POP marque todo lo que se cumple:</legend>
+	      <input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" />
+	      <label for="checkbox-1a">POP está en buen estado</label>
+	 
+	      <input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom" />
+	      <label for="checkbox-2a">Está puesto el atril con pizarra.</label>
+	 
+	      <input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom" />
+	      <label for="checkbox-3a">Esta la pizarra escrita de acuerdo a formato enviado</label>
+	 
+	      <input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
+	      <label for="checkbox-4a">Ninguna de las anteriores</label>
+	    </fieldset>
+	    <a href="#page6" data-role="button" >NEXT</a>
+	</div>
 
+	<div data-role="footer">
+		<h4>Depto Informática Eurofashion</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page6">
+	<div data-role="content">	
+	    <a href="#" data-role="button" id="btnCamera">Tomar foto de la vitrina</a>
+	</div>
+
+	<div class="capture" style="text-align:center;">
+		<img src="" alt="">
+	</div>
+</div>
 </body>
 </html>
