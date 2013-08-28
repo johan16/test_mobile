@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>Aplic. Web de jQuery Mobile 2</title>
+<link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="phonegap.js"></script>
+<script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+$( document ).bind( 'deviceready', function() {
+	$( '#btnCamera' ).bind('touchstart click', function() {
+		navigator.camera.getPicture( function( data ) {
+			$( '.capture img' )
+				.attr( 'src', 'data:image/jpeg;base64,' + data )
+				.css( 'visibility', 'visible');
+		}, function( error ) {
+			console.log( 'Error' );
+		}, {
+			destinationType : Camera.DestinationType.DATA_URL, 
+			sourceType : Camera.PictureSourceType.CAMERA,
+			allowEdit : false,
+			targetWidth: 135,
+			targetHeight: 200
+		});
+	});
+});
+</script>
+</head> 
+<body> 
+
+<div data-role="page" id="page">
+	<div data-role="header">
+		<h1>Página uno</h1>
+	</div>
+	<div data-role="content">	
+		<ul data-role="listview">
+			<li><a href="#page2">Página dos</a></li>
+            <li><a href="#page3">Página tres</a></li>
+			<li><a href="#page4">Página 14</a></li>
+            <li><button id="btnCamera">Capture Photo</button></li>
+		</ul>
+	</div>
+    <div class="capture" style="width:200px; height:200px; border:1px solid #333;">
+    	<img src="" />
+    </div>
+	<div data-role="footer">
+		<h4>Pie de página</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page2">
+	<div data-role="header">
+		<h1>Página dos</h1>
+	</div>
+	<div data-role="content">	
+		Contenido		
+	</div>
+	<div data-role="footer">
+		<h4>Pie de página</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page3">
+	<div data-role="header">
+		<h1>Página tres</h1>
+	</div>
+	<div data-role="content">	
+		Contenido		
+	</div>
+	<div data-role="footer">
+		<h4>Pie de página</h4>
+	</div>
+</div>
+
+<div data-role="page" id="page4">
+	<div data-role="header">
+		<h1>Página cuatro</h1>
+	</div>
+	<div data-role="content">	
+		Contenido		
+	</div>
+	<div data-role="footer">
+		<h4>Pie de página</h4>
+	</div>
+</div>
+
+</body>
+</html>
