@@ -20,9 +20,9 @@
 			navigator.camera.getPicture(onSuccessCamera, onErrorCamera, {destinationType : Camera.DestinationType.FILE_URI , 
 																        sourceType : Camera.PictureSourceType.CAMERA,
 																        allowEdit : false,
-																	    targetWidth:  400,
-																        targetHeight: 400,
-																    	quality : 80,
+																	    targetWidth:  1024,
+																        targetHeight: 1024,
+																    	quality : 100,
 																    	correctOrientation : true,
 																    	saveToPhotoAlbum : true});
 												
@@ -34,8 +34,8 @@
 			imagen.attr( 'src', imageData );
 			imagen.css( 'display', 'block');
 			movePic(imageData);
-			$.mobile.changePage("#page6", "slideup");
-		$("#lafoto").val(imageData);
+			//$.mobile.changePage("#page6", "slideup");
+		$("#lafoto").val(imageData);	
 	}
 
 	function onErrorCamera(message){

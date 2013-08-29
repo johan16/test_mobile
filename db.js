@@ -13,7 +13,7 @@ function errorHandler(transaction, error) {
  
 // this is called when a successful transaction happens
 function successCallBack() {
-   alert("DEBUGGING: success");
+   //alert("DEBUGGING: success");
  
 }
  
@@ -24,7 +24,7 @@ function onBodyLoad(){
  
 // This alert is used to make sure the application is loaded correctly
 // you can comment this out once you have the application working
-alert("DEBUGGING: we are in the onBodyLoad() function");
+//alert("DEBUGGING: we are in the onBodyLoad() function");
  
  if (!window.openDatabase) {
    // not all mobile devices support databases  if it does not, the following alert will display
@@ -90,45 +90,80 @@ function AddValueToDB() {
    alert('Databases are not supported in this browser.');
    return;
  }
- alert(q1 + " " +  q2);
-// this is the section that actually inserts the values into the User table
+ //alert(q1 + " " +  q2);
+ // this is the section that actually inserts the values into the User table
  db.transaction(function(transaction) {
-   transaction.executeSql('INSERT INTO User(pregunta, foto) VALUES (?,?)',[q1, q2], nullHandler,errorHandler);
-   
-   // Upload files to server
-		path = q2;
-		name = "prueba";
-		
-		var options = new FileUploadOptions();
-		options.fileKey="file";
-		options.fileName="prueba";
-		options.mimeType="image/jpeg";
-	
-		var params = new Object();
-		params.fullpath = path;
-		params.name = name;
-	
-		options.params = params;
-		options.chunkedMode = false;
-		
-		var ft = new FileTransfer();
-		ft.upload( path, "http://www.eurofashion/app_euro/",
-			function(result) {
-				//upload successful
-				alert('ok')
-			},
-			function(error) {
-				//upload unsuccessful, error occured while upload. 
-				alert('err');
-			},
-			options
-			);
-   
+   transaction.executeSql('INSERT INTO User(pregunta, foto) VALUES (?,?)',[q1, q2], nullHandler,errorHandler);   
    });
  
 // this calls the function that will show what is in the User table in the database
+  //pictureSource=navigator.camera.PictureSourceType; 
+  //destinationType=navigator.camera.DestinationType;
+  
+  window.resolveLocalFileSystemURI(q2, uploadPhoto, function() { alert('mcncnc');});
+  
+ //uploadPhoto(q2);
  ListDBValues();
- 
  return false;
- 
 }
+
+//function getPhoto(source) {
+
+// Retrieve image file location from specified source 
+//navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+//quality: 50, destinationType: destinationType.FILE_URI, sourceType: source });
+
+//}
+
+//function onDeviceReady() {
+//        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+//        window.resolveLocalFileSystemURI("file:///example.txt", onResolveSuccess, fail);
+//    }
+//
+    //function onFileSystemSuccess(fileSystem) {
+//		alert("1" + fileSystem.name);
+//        console.log(fileSystem.name);
+//    }
+//
+//    function onResolveSuccess(fileEntry) {
+//		alert("2" + fileEntry.name);
+//        console.log(fileEntry.name);
+//    }
+//
+//    function fail(evt) {
+//		alert("3" + evt.target.error.code);
+//        console.log(evt.target.error.code);
+//    }
+
+
+function uploadPhoto(imageURI) {
+			//alert('1');
+            var options = new FileUploadOptions();
+            options.fileKey="file";
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.mimeType="image/jpeg";
+
+            var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
+
+            options.params = params;
+
+            var ft = new FileTransfer();
+            ft.upload(imageURI, "http://www.eurofashion.cl/app_euro/", win, fail, options);
+			//alert('2');
+        }	
+	
+	function win(r) {
+			alert('3');
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
+    }
+
+    function fail(error) {
+			alert('4');
+            alert("An error has occurred: Code = " + error.code);
+            console.log("upload error source " + error.source);
+            console.log("upload error target " + error.target);
+    }
