@@ -35,6 +35,7 @@
 			imagen.css( 'display', 'block');
 			movePic(imageData);
 			$.mobile.changePage("#page6", "slideup");
+		$("#lafoto").val(imageData);
 	}
 
 	function onErrorCamera(message){
@@ -140,7 +141,7 @@
 	<div data-role="fieldcontain">
 	  <fieldset data-role="controlgroup">
 	    <legend>Del POP marque todo lo que se cumple:</legend>
-	      <input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" />
+	      <input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" value="1" />
 	      <label for="checkbox-1a">POP está en buen estado</label>
 	 
 	      <input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom" />
@@ -149,16 +150,26 @@
 	      <input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom" />
 	      <label for="checkbox-3a">Esta la pizarra escrita de acuerdo a formato enviado</label>
 	 
-	      <input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
-	      <label for="checkbox-4a">Ninguna de las anteriores</label>
+	      <!--<input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
+	      <label for="checkbox-4a">Ninguna de las anteriores</label>-->
+          
+          <button id="btnCamera">Tomar foto</button>
+          <input type="text" id="lafoto" value="0" />
 	    </fieldset>
-	    <a href="#page6" data-role="button" >NEXT</a>
+        
+        <div class="capture" style="text-align:center;">
+			<img src="" alt="" style="margin-left:5%">
+		</div>
+        
+        <input type="button" value="Guardar" onClick="AddValueToDB()">
+        <input type="button" value="Refrescar" onClick="ListDBValues()">
+	    <!--<a href="#page6" data-role="button" >NEXT</a>
        	<input id="txFirstName" type="text" placeholder="FirstName">
 		<input id="txLastName" type="text" placeholder="Last Name">
 		<input type="button" value="Add record" onClick="AddValueToDB()">
 		<input type="button" value="Refresh" onClick="ListDBValues()"> <br>
-		<br>
-		<span style="font-weight:bold;">Currently stored values:</span>
+		<br>-->
+		<!--<span style="font-weight:bold;">Currently stored values:</span>-->
 		<span id="lbUsers"></span>
 	</div>
 	<div data-role="footer" data-position="fixed" >
@@ -167,13 +178,7 @@
 </div>
 
 <div data-role="page" id="page6">
-	<div data-role="content">	
-	    <a href="#" data-role="button" id="btnCamera">Tomar foto de la vitrina</a>
-	</div>
 
-	<div class="capture" style="text-align:center;">
-		<img src="" alt="" style="margin-left:5%">
-	</div>
 </div>
 </body>
 </html>

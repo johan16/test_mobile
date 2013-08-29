@@ -46,7 +46,7 @@ alert("DEBUGGING: we are in the onBodyLoad() function");
   // this line actually creates the table User if it does not exist and sets up the three columns and their types
   // note the UserId column is an auto incrementing column which is useful if you want to pull back distinct rows
   // easily from the table.
-   tx.executeSql( 'CREATE TABLE IF NOT EXISTS User(UserId INTEGER NOT NULL PRIMARY KEY, FirstName TEXT NOT NULL, LastName TEXT NOT NULL)',
+   tx.executeSql( 'CREATE TABLE IF NOT EXISTS User(Id INTEGER NOT NULL PRIMARY KEY, pregunta TEXT NOT NULL, foto TEXT NOT NULL)',
 [],nullHandler,errorHandler);
  },errorHandler,successCallBack);
  
@@ -72,7 +72,7 @@ function ListDBValues() {
       if (result != null && result.rows != null) {
         for (var i = 0; i < result.rows.length; i++) {
           var row = result.rows.item(i);
-          $('#lbUsers').append('<br>' + row.UserId + '. ' + row.FirstName+ ' ' + row.LastName);
+          $('#lbUsers').append('<br>' + row.Id + '. ' + row.pregunta+ ' ' + row.foto);
         }
       }
      },errorHandler);
@@ -84,16 +84,46 @@ function ListDBValues() {
  
 // this is the function that puts values into the database using the values from the text boxes on the screen
 function AddValueToDB() {
- alert("click add value");
+ var q1 = $('#checkbox-1a').val();
+ var q2 = $('#lafoto').val();
  if (!window.openDatabase) {
    alert('Databases are not supported in this browser.');
    return;
  }
- 
+ alert(q1 + " " +  q2);
 // this is the section that actually inserts the values into the User table
  db.transaction(function(transaction) {
-   transaction.executeSql('INSERT INTO User(FirstName, LastName) VALUES (?,?)',[$('#txFirstName').val(), $('#txLastName').val()],
-     nullHandler,errorHandler);
+   transaction.executeSql('INSERT INTO User(pregunta, foto) VALUES (?,?)',[q1, q2], nullHandler,errorHandler);
+   
+   // Upload files to server
+		path = q2;
+		name = "prueba";
+		
+		var options = new FileUploadOptions();
+		options.fileKey="file";
+		options.fileName="prueba";
+		options.mimeType="image/jpeg";
+	
+		var params = new Object();
+		params.fullpath = path;
+		params.name = name;
+	
+		options.params = params;
+		options.chunkedMode = false;
+		
+		var ft = new FileTransfer();
+		ft.upload( path, "http://www.eurofashion/app_euro/",
+			function(result) {
+				//upload successful
+				alert('ok')
+			},
+			function(error) {
+				//upload unsuccessful, error occured while upload. 
+				alert('err');
+			},
+			options
+			);
+   
    });
  
 // this calls the function that will show what is in the User table in the database
