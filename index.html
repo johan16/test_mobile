@@ -78,7 +78,7 @@
 	}
 </script>
 </head> 
-<body> 
+<body onload="onBodyLoad()"> 
 
 <div data-role="page" id="page">
 	<div data-role="header">
@@ -92,7 +92,7 @@
 			<li><a href="#">TIENDA N</a></li>
 		</ul>
 	</div>
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed" >
 		<h4>Depto Informática Eurofashion</h4>
 	</div>
 </div>
@@ -117,7 +117,7 @@
 	<div data-role="content">	
 		Contenido		
 	</div>
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed" >
 		<h4>Depto Informática Eurofashion</h4>
 	</div>
 </div>
@@ -129,7 +129,7 @@
 	<div data-role="content">	
 		Contenido		
 	</div>
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed" >
 		<h4>Depto Informática Eurofashion</h4>
 	</div>
 </div>
@@ -153,11 +153,15 @@
 	      <label for="checkbox-4a">Ninguna de las anteriores</label>
 	    </fieldset>
 	    <a href="#page6" data-role="button" >NEXT</a>
-        <button id="addButton">Guardar</button>
-        <button id="consultar">Consultar</button>
-        <div id="results">MSG</div>
+       	<input id="txFirstName" type="text" placeholder="FirstName">
+		<input id="txLastName" type="text" placeholder="Last Name">
+		<input type="button" value="Add record" onClick="AddValueToDB()">
+		<input type="button" value="Refresh" onClick="ListDBValues()"> <br>
+		<br>
+		<span style="font-weight:bold;">Currently stored values:</span>
+		<span id="lbUsers"></span>
 	</div>
-	<div data-role="footer">
+	<div data-role="footer" data-position="fixed" >
 		<h4>Depto Informática Eurofashion</h4>
 	</div>
 </div>
