@@ -13,7 +13,7 @@
 </head> 
 <body> 
 	<!-- Home -->
-	<div data-role="page" id="page0">
+	<!--<div data-role="page" id="page0">
 		<div data-role="content">
 		    <div class="ui-grid-a">
 		        <div class="ui-block-a">
@@ -38,7 +38,7 @@
 		<div data-role="footer" data-position="fixed" >
 			<h4>Depto Informática Eurofashion</h4>
 		</div>
-	</div>
+	</div>-->
 
 	<div data-role="page" id="page">
 		<div data-role="header">
@@ -100,13 +100,13 @@
 		<div data-role="fieldcontain">
 		  <fieldset data-role="controlgroup">
 		    <legend>Del POP marque todo lo que se cumple:</legend>
-		      <input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" value="1" />
+		      <input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="promox" value="POP" />
 		      <label for="checkbox-1a">POP está en buen estado</label>
 		 
-		      <input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom" />
+		      <input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="promox" value="ATRIL" />
 		      <label for="checkbox-2a">Está puesto el atril con pizarra.</label>
 		 
-		      <input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom" />
+		      <input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="promox" value="FORMATO" />
 		      <label for="checkbox-3a">Esta la pizarra escrita de acuerdo a formato enviado</label>
 		 
 		      <!--<input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
@@ -122,6 +122,7 @@
 	        
 	        <input type="button" value="Guardar" onClick="AddValueToDB()">
 	        <input type="button" value="Refrescar" onClick="ListDBValues()">
+            <input type="button" value="Sincronizar" onClick="Sincroniza()">
 		    <!--<a href="#page6" data-role="button" >NEXT</a>
 	       	<input id="txFirstName" type="text" placeholder="FirstName">
 			<input id="txLastName" type="text" placeholder="Last Name">

@@ -7,7 +7,7 @@ function onDeviceReady(){
 															        allowEdit : false,
 																    targetWidth:  1024,
 															        targetHeight: 1024,
-															    	quality : 100,
+															    	quality : 80,
 															    	correctOrientation : true,
 															    	saveToPhotoAlbum : true});
 											

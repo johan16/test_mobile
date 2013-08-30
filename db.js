@@ -44,7 +44,7 @@ function onBodyLoad(){
     // this line actually creates the table User if it does not exist and sets up the three columns and their types
     // note the UserId column is an auto incrementing column which is useful if you want to pull back distinct rows
     // easily from the table.
-    tx.executeSql( 'CREATE TABLE IF NOT EXISTS User(Id INTEGER NOT NULL PRIMARY KEY, pregunta TEXT NOT NULL, foto TEXT NOT NULL)',
+    tx.executeSql( 'CREATE TABLE IF NOT EXISTS User(Id INTEGER NOT NULL PRIMARY KEY, pregunta TEXT NOT NULL, foto TEXT NOT NULL, estado TEXT)',
       [],nullHandler,errorHandler);
     },errorHandler,successCallBack);
  
@@ -65,12 +65,12 @@ function ListDBValues() {
     // this next section will select all the content from the User table and then go through it row by row
     // appending the UserId  FirstName  LastName to the  #lbUsers element on the page
     db.transaction(function(transaction) {
-     transaction.executeSql('SELECT * FROM User;', [],
+     transaction.executeSql("SELECT * FROM User;", [],
        function(transaction, result) {
         if (result != null && result.rows != null) {
           for (var i = 0; i < result.rows.length; i++) {
             var row = result.rows.item(i);
-            $('#lbUsers').append('<br>' + row.Id + '. ' + row.pregunta+ ' ' + row.foto);
+            $('#lbUsers').append('<br>' + row.Id + '. ' + row.pregunta+ ' ' + row.foto + ' ' + row.estado);
           }
         }
        },errorHandler);
@@ -81,8 +81,9 @@ function ListDBValues() {
  
 // this is the function that puts values into the database using the values from the text boxes on the screen
 function AddValueToDB() {
-    var q1 = $('#checkbox-1a').val();
+    //var q1 = $('#checkbox-1a').val();
     var q2 = $('#lafoto').val();
+	var q1 = $('input:checkbox:checked.group1').map(function () { return this.value; }).get();
     if (!window.openDatabase) {
       alert('Databases are not supported in this browser.');
       return;
@@ -96,27 +97,25 @@ function AddValueToDB() {
     // this calls the function that will show what is in the User table in the database
     //pictureSource=navigator.camera.PictureSourceType; 
     //destinationType=navigator.camera.DestinationType;
-
-    uploadPhoto(q2);
     ListDBValues();
     return false;
 }
 
-function onFileSystemSuccess(fileSystem) {
-    alert(fileSystem.name);
-}
-
-function onResolveSuccess(fileEntry) {
-    console.log(fileEntry.name);
-}
-
-function fail(evt) {
-    alert(evt.target.error.code);
-}
+//function onFileSystemSuccess(fileSystem) {
+//    alert(fileSystem.name);
+//}
+//
+//function onResolveSuccess(fileEntry) {
+//    console.log(fileEntry.name);
+//}
+//
+//function fail(evt) {
+//    alert(evt.target.error.code);
+//}
 
 
 function uploadPhoto(imageURI) {
-    alert('1');
+    //alert('1');
     var options = new FileUploadOptions();
     options.fileKey="file";
     options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
@@ -144,4 +143,33 @@ function fail(error) {
     alert("An error has occurred: Code = " + error.code);
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
+}
+
+function Sincroniza() {
+    alert("Sincronizar");
+    if (!window.openDatabase) {
+      alert('Databases are not supported in this browser.');
+      return;
+    }
+ 
+    // this line clears out any content in the #lbUsers element on the page so that the next few lines will show updated
+    // content and not just keep repeating lines
+    $('#lbUsers').html('');
+ 
+    // this next section will select all the content from the User table and then go through it row by row
+    // appending the UserId  FirstName  LastName to the  #lbUsers element on the page
+    db.transaction(function(transaction) {
+     transaction.executeSql('SELECT * FROM User WHERE estado IS NULL;', [],
+       function(transaction, result) {
+        if (result != null && result.rows != null) {
+          for (var i = 0; i < result.rows.length; i++) {
+            var row = result.rows.item(i);
+			uploadPhoto(row.foto);
+			transaction.executeSql("UPDATE User SET estado = '1' WHERE Id = ?",[row.Id], nullHandler,errorHandler);   
+          }
+        }
+       },errorHandler);
+    },errorHandler,nullHandler);
+
+    return;
 }
