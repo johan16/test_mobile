@@ -84,27 +84,40 @@ function ListDBValues() {
  
 // this is the function that puts values into the database using the values from the text boxes on the screen
 function AddValueToDB() {
- var q1 = $('#checkbox-1a').val();
- var q2 = $('#lafoto').val();
- if (!window.openDatabase) {
-   alert('Databases are not supported in this browser.');
-   return;
- }
- //alert(q1 + " " +  q2);
- // this is the section that actually inserts the values into the User table
- db.transaction(function(transaction) {
-   transaction.executeSql('INSERT INTO User(pregunta, foto) VALUES (?,?)',[q1, q2], nullHandler,errorHandler);   
-   });
+    var q1 = $('#checkbox-1a').val();
+    var q2 = $('#lafoto').val();
+    if (!window.openDatabase) {
+     alert('Databases are not supported in this browser.');
+     return;
+    }
+  
+    // this is the section that actually inserts the values into the User table
+    db.transaction(function(transaction) {
+        transaction.executeSql('INSERT INTO User(pregunta, foto) VALUES (?,?)',[q1, q2], nullHandler,errorHandler);   
+    });
  
-// this calls the function that will show what is in the User table in the database
-  //pictureSource=navigator.camera.PictureSourceType; 
-  //destinationType=navigator.camera.DestinationType;
-  
-  window.resolveLocalFileSystemURI(q2, uploadPhoto, function() { alert('mcncnc');});
-  
- //uploadPhoto(q2);
- ListDBValues();
- return false;
+    // this calls the function that will show what is in the User table in the database
+    //pictureSource=navigator.camera.PictureSourceType; 
+    //destinationType=navigator.camera.DestinationType;
+
+    // window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+    // window.resolveLocalFileSystemURI(q2, uploadPhoto, fail);
+
+    uploadPhoto(q2);
+    ListDBValues();
+    return false;
+}
+
+function onFileSystemSuccess(fileSystem) {
+    alert(fileSystem.name);
+}
+
+function onResolveSuccess(fileEntry) {
+    console.log(fileEntry.name);
+}
+
+function fail(evt) {
+    alert(evt.target.error.code);
 }
 
 //function getPhoto(source) {
@@ -120,7 +133,7 @@ function AddValueToDB() {
 //        window.resolveLocalFileSystemURI("file:///example.txt", onResolveSuccess, fail);
 //    }
 //
-    //function onFileSystemSuccess(fileSystem) {
+//function onFileSystemSuccess(fileSystem) {
 //		alert("1" + fileSystem.name);
 //        console.log(fileSystem.name);
 //    }
@@ -137,22 +150,21 @@ function AddValueToDB() {
 
 
 function uploadPhoto(imageURI) {
-			//alert('1');
-            var options = new FileUploadOptions();
-            options.fileKey="file";
-            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
-            options.mimeType="image/jpeg";
+    alert('1');
+    var options = new FileUploadOptions();
+    options.fileKey="file";
+    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+    options.mimeType="image/jpeg";
 
-            var params = new Object();
-            params.value1 = "test";
-            params.value2 = "param";
+    var params = new Object();
+    params.value1 = "test";
+    params.value2 = "param";
 
-            options.params = params;
+    options.params = params;
 
-            var ft = new FileTransfer();
-            ft.upload(imageURI, "http://www.eurofashion.cl/app_euro/", win, fail, options);
-			//alert('2');
-        }	
+    var ft = new FileTransfer();
+    ft.upload(imageURI, "http://www.eurofashion.cl/app_euro/", win, fail, options);
+}	
 	
 	function win(r) {
 			alert('3');

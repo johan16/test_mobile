@@ -31,11 +31,11 @@
 
 	function onSuccessCamera(imageData){
 		var imagen = $('.capture > img');
-			imagen.attr( 'src', imageData );
+			imagen.attr({ 'src': imageData, "width" : "320px"} );
 			imagen.css( 'display', 'block');
 			movePic(imageData);
 			//$.mobile.changePage("#page6", "slideup");
-		$("#lafoto").val(imageData);	
+			
 	}
 
 	function onErrorCamera(message){
@@ -72,6 +72,7 @@
 	    //Store imagepath in session for future use
 	    // like to store it in database
 	    sessionStorage.setItem('imagepath', entry.fullPath);
+	    $("#lafoto").val(entry.fullPath);	
 	}
 
 	function resOnError(error) {
@@ -89,7 +90,7 @@
 		<ul data-role="listview" data-filter="true" data-filter-placeholder="Ingrese Tienda">
 			<li><a href="#page2">TIENDA 1</a></li>
             <li><a href="#page3">TIENDA 2</a></li>
-			<li><a href="#page4">TIENDA 33</a></li>
+			<li><a href="#page4">TIENDA 3</a></li>
 			<li><a href="#">TIENDA N</a></li>
 		</ul>
 	</div>
