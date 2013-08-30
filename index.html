@@ -1,185 +1,143 @@
 <!DOCTYPE html> 
 <html>
 <head>
-<meta charset="utf-8">
-<title>DEMO APP MOD</title>
-<link href="jquery.mobile-1.3.2.min.css" rel="stylesheet" type="text/css"/>
-<link href="jquery.mobile.structure-1.3.2.min.css" rel="stylesheet" type="text/css"/>
-<script src="phonegap.js"></script>
-<script src="jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="jquery.mobile-1.3.2.min.js" type="text/javascript"></script>
-<script src="db.js"></script>
-<script type="text/javascript" charset="utf-8">
-
-	$(document).on('deviceready', onDeviceReady);
-
-	function onDeviceReady(){
-
-		$('#btnCamera').on('click', function() {
-			sessionStorage.removeItem('imagepath');
-			navigator.camera.getPicture(onSuccessCamera, onErrorCamera, {destinationType : Camera.DestinationType.FILE_URI , 
-																        sourceType : Camera.PictureSourceType.CAMERA,
-																        allowEdit : false,
-																	    targetWidth:  1024,
-																        targetHeight: 1024,
-																    	quality : 100,
-																    	correctOrientation : true,
-																    	saveToPhotoAlbum : true});
-												
-		});
-	}
-
-	function onSuccessCamera(imageData){
-		var imagen = $('.capture > img');
-			imagen.attr({ 'src': imageData, "width" : "320px"} );
-			imagen.css( 'display', 'block');
-			movePic(imageData);
-			//$.mobile.changePage("#page6", "slideup");
-			
-	}
-
-	function onErrorCamera(message){
-		console.log("Error:" + message);
-	}
-
-
-	function movePic(file){ 
-	    window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError); 
-	} 
-
-	//Callback function when the file system uri has been resolved
-	function resolveOnSuccess(entry){ 
-	    var d = new Date();
-	    var n = d.getTime();
-	    //new file name
-	    var newFileName = n + ".jpg";
-	    var myFolderApp = "Demo";
-
-	    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
-	    //The folder is created if doesn't exist
-	    fileSys.root.getDirectory( myFolderApp,
-	                    {create:true, exclusive: false},
-	                    function(directory) {
-	                        entry.moveTo(directory, newFileName,  successMove, resOnError);
-	                    },
-	                    resOnError);
-	                    },
-	    resOnError);
-	}
-
-	//Callback function when the file has been moved successfully - inserting the complete path
-	function successMove(entry) {
-	    //Store imagepath in session for future use
-	    // like to store it in database
-	    sessionStorage.setItem('imagepath', entry.fullPath);
-	    $("#lafoto").val(entry.fullPath);	
-	}
-
-	function resOnError(error) {
-	    alert(error.code);
-	}
-</script>
+	<meta charset="utf-8">
+	<title>DEMO APP MOD</title>
+	<link href="jquery.mobile-1.3.2.min.css" rel="stylesheet" type="text/css"/>
+	<link href="jquery.mobile.structure-1.3.2.min.css" rel="stylesheet" type="text/css"/>
+	<script src="phonegap.js"></script>
+	<script src="jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="jquery.mobile-1.3.2.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="index.js"></script>
+	<script src="db.js"></script>
 </head> 
-<body onload="onBodyLoad()"> 
+<body> 
+	<!-- Home -->
+	<div data-role="page" id="page0">
+		<div data-role="content">
+		    <div class="ui-grid-a">
+		        <div class="ui-block-a">
 
-<div data-role="page" id="page">
-	<div data-role="header">
-		<h3>NOMBRE SUPERVISOR</h3>
-	</div>
-	<div data-role="content">	
-		<ul data-role="listview" data-filter="true" data-filter-placeholder="Ingrese Tienda">
-			<li><a href="#page2">TIENDA 1</a></li>
-            <li><a href="#page3">TIENDA 2</a></li>
-			<li><a href="#page4">TIENDA 3</a></li>
-			<li><a href="#">TIENDA N</a></li>
-		</ul>
-	</div>
-	<div data-role="footer" data-position="fixed" >
-		<h4>Depto Informática Eurofashion</h4>
-	</div>
-</div>
-
-<div data-role="page" id="page2">
-	<div data-role="header">
-		<h1>ENCUENTAS TIENDA 1</h1>
-	</div>
-	<ul data-role="listview" >
-		<li><a href="#page5">ENCUESTA 1</a></li>
-        <li><a href="">ENCUESTA 2</a></li>
-		<li><a href="">ENCUESTA 3</a></li>
-		<li><a href="">ENCUESTA N</a></li>
-	</ul>
-	
-</div>
-
-<div data-role="page" id="page3">
-	<div data-role="header">
-		<h1>Página tres</h1>
-	</div>
-	<div data-role="content">	
-		Contenido		
-	</div>
-	<div data-role="footer" data-position="fixed" >
-		<h4>Depto Informática Eurofashion</h4>
-	</div>
-</div>
-
-<div data-role="page" id="page4">
-	<div data-role="header">
-		<h1>Página cuatro</h1>
-	</div>
-	<div data-role="content">	
-		Contenido		
-	</div>
-	<div data-role="footer" data-position="fixed" >
-		<h4>Depto Informática Eurofashion</h4>
-	</div>
-</div>
-<div data-role="page" id="page5">
-	<div data-role="header">
-		<h3>PROMOCION X</h3>
-	</div>
-	<div data-role="fieldcontain">
-	  <fieldset data-role="controlgroup">
-	    <legend>Del POP marque todo lo que se cumple:</legend>
-	      <input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" value="1" />
-	      <label for="checkbox-1a">POP está en buen estado</label>
-	 
-	      <input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom" />
-	      <label for="checkbox-2a">Está puesto el atril con pizarra.</label>
-	 
-	      <input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom" />
-	      <label for="checkbox-3a">Esta la pizarra escrita de acuerdo a formato enviado</label>
-	 
-	      <!--<input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
-	      <label for="checkbox-4a">Ninguna de las anteriores</label>-->
-          
-          <button id="btnCamera">Tomar foto</button>
-          <input type="text" id="lafoto" value="0" />
-	    </fieldset>
-        
-        <div class="capture" style="text-align:center;">
-			<img src="" alt="" style="margin-left:5%">
+		        </div>
+		        <div class="ui-block-b" style="text-align:center;">
+		        	<figure>
+		        		<img src="images/sincronizar.png" width="64">
+		        		<figcaption><h3>SINCRONIZAR</h3></figcaption>	
+		        	<figure>
+		        </div>
+		        <div class="ui-block-a">
+		        </div>
+		        <div class="ui-block-b" style="text-align:center;">
+		        	<figure>
+		        		<img src="images/help.png" width="64">
+		        		<figcaption><h3>AYUDA</h3></figcaption>	
+		        	<figure>
+		        </div>
+		    </div>
 		</div>
-        
-        <input type="button" value="Guardar" onClick="AddValueToDB()">
-        <input type="button" value="Refrescar" onClick="ListDBValues()">
-	    <!--<a href="#page6" data-role="button" >NEXT</a>
-       	<input id="txFirstName" type="text" placeholder="FirstName">
-		<input id="txLastName" type="text" placeholder="Last Name">
-		<input type="button" value="Add record" onClick="AddValueToDB()">
-		<input type="button" value="Refresh" onClick="ListDBValues()"> <br>
-		<br>-->
-		<!--<span style="font-weight:bold;">Currently stored values:</span>-->
-		<span id="lbUsers"></span>
+		<div data-role="footer" data-position="fixed" >
+			<h4>Depto Informática Eurofashion</h4>
+		</div>
 	</div>
-	<div data-role="footer" data-position="fixed" >
-		<h4>Depto Informática Eurofashion</h4>
+
+	<div data-role="page" id="page">
+		<div data-role="header">
+			<h5>NOMBRE SUPERVISOR</h5>
+		</div>
+		<div data-role="content">	
+			<ul data-role="listview" data-filter="true" data-filter-placeholder="Ingrese Tienda">
+				<li><a href="#page2">TIENDA 1</a></li>
+	            <li><a href="#page3">TIENDA 2</a></li>
+				<li><a href="#page4">TIENDA 3</a></li>
+				<li><a href="#">TIENDA N</a></li>
+			</ul>
+		</div>
+		<div data-role="footer" data-position="fixed" >
+			<h4>Depto Informática Eurofashion</h4>
+		</div>
 	</div>
-</div>
 
-<div data-role="page" id="page6">
+	<div data-role="page" id="page2">
+		<div data-role="header">
+			<h1>ENCUENTAS TIENDA 1</h1>
+		</div>
+		<ul data-role="listview" >
+			<li><a href="#page5">ENCUESTA 1</a></li>
+	        <li><a href="">ENCUESTA 2</a></li>
+			<li><a href="">ENCUESTA 3</a></li>
+			<li><a href="">ENCUESTA N</a></li>
+		</ul>
+		
+	</div>
 
-</div>
+	<div data-role="page" id="page3">
+		<div data-role="header">
+			<h1>Página tres</h1>
+		</div>
+		<div data-role="content">	
+			Contenido		
+		</div>
+		<div data-role="footer" data-position="fixed" >
+			<h4>Depto Informática Eurofashion</h4>
+		</div>
+	</div>
+
+	<div data-role="page" id="page4">
+		<div data-role="header">
+			<h1>Página cuatro</h1>
+		</div>
+		<div data-role="content">	
+			Contenido		
+		</div>
+		<div data-role="footer" data-position="fixed" >
+			<h4>Depto Informática Eurofashion</h4>
+		</div>
+	</div>
+	<div data-role="page" id="page5">
+		<div data-role="header">
+			<h3>PROMOCION X</h3>
+		</div>
+		<div data-role="fieldcontain">
+		  <fieldset data-role="controlgroup">
+		    <legend>Del POP marque todo lo que se cumple:</legend>
+		      <input type="checkbox" name="checkbox-1a" id="checkbox-1a" class="custom" value="1" />
+		      <label for="checkbox-1a">POP está en buen estado</label>
+		 
+		      <input type="checkbox" name="checkbox-2a" id="checkbox-2a" class="custom" />
+		      <label for="checkbox-2a">Está puesto el atril con pizarra.</label>
+		 
+		      <input type="checkbox" name="checkbox-3a" id="checkbox-3a" class="custom" />
+		      <label for="checkbox-3a">Esta la pizarra escrita de acuerdo a formato enviado</label>
+		 
+		      <!--<input type="checkbox" name="checkbox-4a" id="checkbox-4a" class="custom" />
+		      <label for="checkbox-4a">Ninguna de las anteriores</label>-->
+	          
+	          <button id="btnCamera">Tomar foto</button>
+	          <input type="text" id="lafoto" value="0" />
+		    </fieldset>
+	        
+	        <div class="capture" style="text-align:center;">
+				<img src="" alt="" style="margin-left:5%">
+			</div>
+	        
+	        <input type="button" value="Guardar" onClick="AddValueToDB()">
+	        <input type="button" value="Refrescar" onClick="ListDBValues()">
+		    <!--<a href="#page6" data-role="button" >NEXT</a>
+	       	<input id="txFirstName" type="text" placeholder="FirstName">
+			<input id="txLastName" type="text" placeholder="Last Name">
+			<input type="button" value="Add record" onClick="AddValueToDB()">
+			<input type="button" value="Refresh" onClick="ListDBValues()"> <br>
+			<br>-->
+			<!--<span style="font-weight:bold;">Currently stored values:</span>-->
+			<span id="lbUsers"></span>
+		</div>
+		<div data-role="footer" data-position="fixed" >
+			<h4>Depto Informática Eurofashion</h4>
+		</div>
+	</div>
+
+	<div data-role="page" id="page6">
+
+	</div>
 </body>
 </html>
