@@ -9,7 +9,7 @@ function onDeviceReady(){
 															        targetHeight: 1024,
 															    	quality : 80,
 															    	correctOrientation : true,
-															    	saveToPhotoAlbum : true});
+															    	saveToPhotoAlbum : false});
 											
 	});
 

@@ -22,7 +22,7 @@ function onBodyLoad(){
  
     // This alert is used to make sure the application is loaded correctly
     // you can comment this out once you have the application working
-    alert("DEBUGGING: we are in the onBodyLoad() function");
+    //alert("DEBUGGING: we are in the onBodyLoad() function");
 
     if (!window.openDatabase) {
      // not all mobile devices support databases  if it does not, the following alert will display
@@ -83,7 +83,7 @@ function ListDBValues() {
 function AddValueToDB() {
     //var q1 = $('#checkbox-1a').val();
     var q2 = $('#lafoto').val();
-	var q1 = $('input:checkbox:checked.group1').map(function () { return this.value; }).get();
+	var q1 = $('input:checkbox:checked.promox').map(function () { return this.value; }).get();
     if (!window.openDatabase) {
       alert('Databases are not supported in this browser.');
       return;
@@ -112,9 +112,8 @@ function AddValueToDB() {
 //function fail(evt) {
 //    alert(evt.target.error.code);
 //}
-
-
-function uploadPhoto(imageURI) {
+	
+function uploadPhoto(imageURI, pregunta) {
     //alert('1');
     var options = new FileUploadOptions();
     options.fileKey="file";
@@ -122,17 +121,17 @@ function uploadPhoto(imageURI) {
     options.mimeType="image/jpeg";
 
     var params = {};
-    params.value1 = "test";
-    params.value2 = "param";
+    params.value1 = pregunta;
+    //params.value2 = "param";
 
     options.params = params;
 
     var ft = new FileTransfer();
-    ft.upload(imageURI, "http://www.eurofashion.cl/app_euro/", win, fail, options);
+    respuesta = ft.upload(imageURI, "http://www.eurofashion.cl/app_euro/", win, fail, options);
 }	
 	
 function win(r) {
-    alert('3');
+    alert('3 ' + r.responseCode);
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
     console.log("Sent = " + r.bytesSent);
@@ -164,7 +163,7 @@ function Sincroniza() {
         if (result != null && result.rows != null) {
           for (var i = 0; i < result.rows.length; i++) {
             var row = result.rows.item(i);
-			uploadPhoto(row.foto);
+			uploadPhoto(row.foto, row.pregunta);
 			transaction.executeSql("UPDATE User SET estado = '1' WHERE Id = ?",[row.Id], nullHandler,errorHandler);   
           }
         }
